@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="WareHouses\" />
+    <Folder Include="Systems\" />
+    <Folder Include="Others\" />
+    <Folder Include="Orders\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eFashionStore.Data\eFashionStore.Data.csproj" />
+    <ProjectReference Include="..\eFashionStore.Model\eFashionStore.Model.csproj" />
+  </ItemGroup>
+
+</Project>

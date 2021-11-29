@@ -1,0 +1,2 @@
+- ADMIN
+ + GET ALL CATEGORIES https://localhost:44372/api/admin/categories/getall
