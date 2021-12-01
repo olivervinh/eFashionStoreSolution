@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.WareHouses
 {
-    public interface IWareHouseBillDetailRepository : IRepository<WareHouseBillDetail>
+    public interface IWareHouseBillDetailRepository : IBaseRepository<WareHouseBillDetail>
     {
     }
-    public class WareHouseBillDetailRepository : RepositoryBase<WareHouseBillDetail>, IWareHouseBillDetailRepository
+    public class WareHouseBillDetailRepository : BaseRepository<WareHouseBillDetail>, IWareHouseBillDetailRepository
     {
         public WareHouseBillDetailRepository(EFashionStoreDbContext context) : base(context)
         {

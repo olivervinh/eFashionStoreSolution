@@ -1,5 +1,4 @@
-﻿using eFashionStore.Data.Infrastructure;
-using eFashionStore.Data.Repositories.Catalogs;
+﻿using eFashionStore.Data.Repositories.Catalogs;
 using eFashionStore.Data.Repositories.Orders;
 using eFashionStore.Data.Repositories.Others;
 using eFashionStore.Data.Repositories.Systems;
@@ -12,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eFashionStore.Data.DataServiceCollection
+namespace eFashionStore.Data.Infrastructure
 {
     public static class DataServiceCollection
     {
@@ -20,7 +19,7 @@ namespace eFashionStore.Data.DataServiceCollection
         {
 
             #region Repositories Base
-            services.AddTransient(typeof(IRepository<>), typeof(RepositoryBase<>));
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             #endregion
 
             #region Repositories Catalogs

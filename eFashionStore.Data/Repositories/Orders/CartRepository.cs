@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Orders
 {
-    public interface ICartRepository : IRepository<Cart>
+    public interface ICartRepository : IBaseRepository<Cart>
     {
     }
-    public class CartRepository : RepositoryBase<Cart>, ICartRepository
+    public class CartRepository : BaseRepository<Cart>, ICartRepository
     { 
         public CartRepository(EFashionStoreDbContext context) : base(context)
         {

@@ -14,7 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\Admin\WarehouseManage\" />
+    <Folder Include="Controllers\Admin\OrderManage\" />
+    <Folder Include="Controllers\Admin\WarehouseDashboard\" />
+    <Folder Include="Controllers\Admin\SellDashboard\" />
+    <Folder Include="Controllers\Admin\OverviewDashboard\" />
     <Folder Include="Controllers\Client\" />
+    <Folder Include="Controllers\Common\" />
   </ItemGroup>
 
 </Project>

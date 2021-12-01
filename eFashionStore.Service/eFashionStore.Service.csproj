@@ -5,10 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="WareHouses\" />
-    <Folder Include="Systems\" />
-    <Folder Include="Others\" />
-    <Folder Include="Orders\" />
+    <Compile Remove="Catalogs\**" />
+    <Compile Remove="Orders\**" />
+    <Compile Remove="Others\**" />
+    <Compile Remove="Systems\**" />
+    <Compile Remove="Users\**" />
+    <Compile Remove="WareHouses\**" />
+    <EmbeddedResource Remove="Catalogs\**" />
+    <EmbeddedResource Remove="Orders\**" />
+    <EmbeddedResource Remove="Others\**" />
+    <EmbeddedResource Remove="Systems\**" />
+    <EmbeddedResource Remove="Users\**" />
+    <EmbeddedResource Remove="WareHouses\**" />
+    <None Remove="Catalogs\**" />
+    <None Remove="Orders\**" />
+    <None Remove="Others\**" />
+    <None Remove="Systems\**" />
+    <None Remove="Users\**" />
+    <None Remove="WareHouses\**" />
   </ItemGroup>
 
   <ItemGroup>

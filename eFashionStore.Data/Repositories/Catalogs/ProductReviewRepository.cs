@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Catalogs
 {
-    public interface IProductReviewRepository : IRepository<ProductReview>
+    public interface IProductReviewRepository : IBaseRepository<ProductReview>
     {
     }
-    public class ProductReviewRepository : RepositoryBase<ProductReview>, IProductReviewRepository
+    public class ProductReviewRepository : BaseRepository<ProductReview>, IProductReviewRepository
     {
         public ProductReviewRepository(EFashionStoreDbContext context) : base(context)
         {

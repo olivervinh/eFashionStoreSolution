@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Systems
 {
-    public interface INotificationCheckoutRepository : IRepository<NotificationCheckout>
+    public interface INotificationCheckoutRepository : IBaseRepository<NotificationCheckout>
     {
     }
-    public class NotificationCheckoutRepository : RepositoryBase<NotificationCheckout>, INotificationCheckoutRepository
+    public class NotificationCheckoutRepository : BaseRepository<NotificationCheckout>, INotificationCheckoutRepository
     {
         public NotificationCheckoutRepository(EFashionStoreDbContext context) : base(context)
         {

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Users
 {
-    public interface IAuthHistoryRepository : IRepository<AuthHistory>
+    public interface IAuthHistoryRepository : IBaseRepository<AuthHistory>
     {
     }
-    public class AuthHistoryRepository : RepositoryBase<AuthHistory>, IAuthHistoryRepository
+    public class AuthHistoryRepository : BaseRepository<AuthHistory>, IAuthHistoryRepository
     {
         public AuthHistoryRepository(EFashionStoreDbContext context) : base(context)
         {

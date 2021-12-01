@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Orders
 {
-    public interface IOrderDetailRepository : IRepository<OrderDetail>
+    public interface IOrderDetailRepository : IBaseRepository<OrderDetail>
     {
     }
-    public class OrderDetailRepository : RepositoryBase<OrderDetail>, IOrderDetailRepository
+    public class OrderDetailRepository : BaseRepository<OrderDetail>, IOrderDetailRepository
     {
         public OrderDetailRepository(EFashionStoreDbContext context) : base(context)
         {

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Users
 {
-    public interface IAppUserRepository : IRepository<AppUser>
+    public interface IAppUserRepository : IBaseRepository<AppUser>
     {
     }
-    public class AppUserRepository : RepositoryBase<AppUser>, IAppUserRepository
+    public class AppUserRepository : BaseRepository<AppUser>, IAppUserRepository
     {
         public AppUserRepository(EFashionStoreDbContext context) : base(context)
         {

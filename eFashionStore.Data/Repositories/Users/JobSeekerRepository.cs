@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Users
 {
-    public interface IJobSeekerRepository : IRepository<JobSeeker>
+    public interface IJobSeekerRepository : IBaseRepository<JobSeeker>
     {
     }
-    public class JobSeekerRepository : RepositoryBase<JobSeeker>, IJobSeekerRepository
+    public class JobSeekerRepository : BaseRepository<JobSeeker>, IJobSeekerRepository
     {
         public JobSeekerRepository(EFashionStoreDbContext context) : base(context)
         {

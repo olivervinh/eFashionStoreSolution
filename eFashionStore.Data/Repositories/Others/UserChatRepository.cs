@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Others
 {
-    public interface IUserChatRepository : IRepository<UserChat>
+    public interface IUserChatRepository : IBaseRepository<UserChat>
     {
     }
-    public class UserChatRepository : RepositoryBase<UserChat>, IUserChatRepository
+    public class UserChatRepository : BaseRepository<UserChat>, IUserChatRepository
     {
         public UserChatRepository(EFashionStoreDbContext context) : base(context)
         {

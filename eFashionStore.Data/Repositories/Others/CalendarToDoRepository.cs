@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Others
 {
-    public interface ICalendarToDoRepository : IRepository<CalendarToDo>
+    public interface ICalendarToDoRepository : IBaseRepository<CalendarToDo>
     {
     }
-    public class CalendarToDoRepository : RepositoryBase<CalendarToDo>, ICalendarToDoRepository
+    public class CalendarToDoRepository : BaseRepository<CalendarToDo>, ICalendarToDoRepository
     {
         public CalendarToDoRepository(EFashionStoreDbContext context) : base(context)
         {

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Systems
 {
-    public interface INotificationRepository : IRepository<Notification>
+    public interface INotificationRepository : IBaseRepository<Notification>
     {
     }
-    public class NotificationRepository : RepositoryBase<Notification>, INotificationRepository
+    public class NotificationRepository : BaseRepository<Notification>, INotificationRepository
     {
         public NotificationRepository(EFashionStoreDbContext context) : base(context)
         {

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.Data.Repositories.Catalogs
 {
-    public interface IColorRepository : IRepository<Color>
+    public interface IColorRepository : IBaseRepository<Color>
     {
     }
-    public class ColorRepository : RepositoryBase<Color>, IColorRepository
+    public class ColorRepository : BaseRepository<Color>, IColorRepository
     {
         public ColorRepository(EFashionStoreDbContext context) : base(context)
         {
