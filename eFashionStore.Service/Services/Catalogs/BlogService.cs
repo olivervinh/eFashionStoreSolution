@@ -14,12 +14,19 @@ namespace eFashionStore.Data.Repositories.Catalogs
 {
     public interface IBlogService : IBaseService<Blog>
     {
+        Task<IEnumerable<BlogAndImage>> GetBlogAndImagesList();
     }
     public class BlogService : BaseService<Blog>, IBlogService
     {
-        public BlogService(IBaseRepository<Blog> repository, IUnitOfWork unitOfWork) : base(repository, unitOfWork)
+        private IBlogRepository _blogRepository;
+        public BlogService(IBaseRepository<Blog> repository, IBlogRepository blogRepository, IUnitOfWork unitOfWork) : base(repository, unitOfWork)
         {
+            _blogRepository = blogRepository;
         }
+        public async Task<IEnumerable<BlogAndImage>> GetBlogAndImagesList()
+        {
 
+            return await _blogRepository.GetBlogAndImagesList();
+        }
     }
 }

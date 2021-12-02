@@ -1,4 +1,5 @@
-﻿using eFashionStore.Data.Repositories.Catalogs;
+﻿using eFahionStore.Common.ViewModal.Catalog;
+using eFashionStore.Data.Repositories.Catalogs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,10 +13,15 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
     [ApiController]
     public class BlogsController : ControllerBase
     {
-          private IBlogService _blogService;
+        private IBlogService _blogService;
         public BlogsController(IBlogService blogService)
         {
-            this._blogService = blogService;
+            _blogService = blogService;
+        }
+        [HttpGet("GetBlogAndImagesList")]
+        public async Task<IEnumerable<BlogAndImage>> GetBlogAndImagesList()
+        {
+            return await _blogService.GetBlogAndImagesList();
         }
     }
 }

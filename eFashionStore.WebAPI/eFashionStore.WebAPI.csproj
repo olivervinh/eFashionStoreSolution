@@ -21,6 +21,7 @@
     <Folder Include="Controllers\Admin\OverviewDashboard\" />
     <Folder Include="Controllers\Client\" />
     <Folder Include="Controllers\Common\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
