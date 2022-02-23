@@ -9,5 +9,6 @@ namespace eFahionStore.Common.Exceptions
     public class SystemContants
     {
         public const string MainConnectionString = "eFashionStoreDb";
+        public const string ConnectionString = @"";
     }
 }

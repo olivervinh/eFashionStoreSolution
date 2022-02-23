@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
@@ -19,9 +21,9 @@
     <Folder Include="Controllers\Admin\WarehouseDashboard\" />
     <Folder Include="Controllers\Admin\SellDashboard\" />
     <Folder Include="Controllers\Admin\OverviewDashboard\" />
-    <Folder Include="Controllers\Client\" />
     <Folder Include="Controllers\Common\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Images\list-image-products\" />
+    <Folder Include="wwwroot\Images\list-image-blogs\" />
   </ItemGroup>
 
 </Project>

@@ -12,9 +12,11 @@ namespace eFashionStore.Model.Models.Users
     public class AppUser: IdentityUser
     {
         public string Address { get; set; }
+        public string PhoneNumber { get; set; }
         public string ImagePath { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Role { get; set; }
         public virtual ICollection<ProductLike> ProductLikes { get; set; }
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         public virtual ICollection<WareHouseBill> PhieuNhapHangs { get; set; }

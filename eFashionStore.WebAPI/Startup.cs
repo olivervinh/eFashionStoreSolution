@@ -1,9 +1,11 @@
 using eFahionStore.Common.Exceptions;
 using eFashionStore.Data.EF;
 using eFashionStore.Data.Infrastructure;
+using eFashionStore.Model.Models.Users;
 using eFashionStore.Service.Intrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +50,22 @@ namespace eFashionStore.WebAPI
             options.UseSqlServer(Configuration.GetConnectionString(SystemContants.MainConnectionString)));
             #endregion
 
-         
+           
+            services.AddIdentity<AppUser, IdentityRole>
+                (o =>
+                {
+                    // configure identity options
+                    o.Password.RequireDigit = false;
+                    o.Password.RequireLowercase = false;
+                    o.Password.RequireUppercase = false;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequiredLength = 6;
+                })
+                .AddEntityFrameworkStores<EFashionStoreDbContext>()
+                .AddDefaultTokenProviders();
+          
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
