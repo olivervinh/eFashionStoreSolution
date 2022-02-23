@@ -26,7 +26,6 @@ namespace eFashionStore.Data.Infrastructure
         public static IConfiguration Configuration { get; }
         public static IServiceCollection DataRegisterServices(this IServiceCollection services)
         {
-
             #region Repositories Base
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             #endregion
@@ -48,7 +47,6 @@ namespace eFashionStore.Data.Infrastructure
             #region Repositories Orders
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             #endregion
 
@@ -63,7 +61,7 @@ namespace eFashionStore.Data.Infrastructure
             #endregion
 
             #region Repositories Users
-            services.AddTransient<IAppUserRepository, AppUserRepository>();
+            services.AddTransient<IAppUserRepository, AccountRespository>();
             services.AddTransient<IAuthHistoryRepository, AuthHistoryRepository>();
             services.AddTransient<IJobSeekerRepository, JobSeekerRepository>();
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));

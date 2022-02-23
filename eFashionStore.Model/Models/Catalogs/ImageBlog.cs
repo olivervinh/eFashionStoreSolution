@@ -13,6 +13,7 @@ namespace eFashionStore.Model.Models.Catalogs
         [Key]
         public int Id { get; set; }
         public string ImageName { get; set; }
+        public bool IsThumbnail { get; set; }
         public int? FkBlogId { get; set; }
         [ForeignKey("FkBlogId")]
         public virtual Blog Blog { get; set; }

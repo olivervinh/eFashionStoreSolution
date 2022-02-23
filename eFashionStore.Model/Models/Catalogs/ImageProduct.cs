@@ -11,6 +11,7 @@ namespace eFashionStore.Model.Models.Catalogs
     {
         public int? Id { get; set; }
         public string ImageName { get; set; }
+        public bool IsThumbnail { get; set; }
         public int? FkProductId { get; set; }
         [ForeignKey("FkProductId")]
         public virtual Product Product { get; set; }

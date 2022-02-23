@@ -12,9 +12,9 @@ namespace eFashionStore.Data.Repositories.Users
     public interface IAppUserRepository : IBaseRepository<AppUser>
     {
     }
-    public class AppUserRepository : BaseRepository<AppUser>, IAppUserRepository
+    public class AccountRespository : BaseRepository<AppUser>, IAppUserRepository
     {
-        public AppUserRepository(EFashionStoreDbContext context) : base(context)
+        public AccountRespository(EFashionStoreDbContext context) : base(context)
         {
 
         }
