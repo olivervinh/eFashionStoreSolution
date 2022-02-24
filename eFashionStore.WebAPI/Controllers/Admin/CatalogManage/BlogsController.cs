@@ -87,7 +87,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
                 {
                     if (formFile.Length > 0 && formFile.Length < 2048)
                     {
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/Pro", "blog_" + blog.Id);
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ImagesBlog", "blog_" + blog.Id);
 
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
@@ -107,6 +107,27 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
                     }
                     index++;
                 }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            return Ok();
+        }
+        [HttpDelete ("{id}")]
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            try
+            {
+                var imageBlogBaseBlogList = await _imageBlogService.GetImageBlogsBaseFkBlogId(id);
+                foreach (var item in imageBlogBaseBlogList)
+                {
+                    System.IO.File.Delete(Path.Combine("wwwroot/Images/ImagesBlog", item.ImageName));
+                }
+                var result = Task.Run(async () => await _imageBlogService.DeleteRange(imageBlogBaseBlogList)).Result;
+                var blog = await _blogService.GetSingleAsyncById(id);
+                if (result)
+                    await _blogService.Delete(blog);
             }
             catch(Exception ex)
             {
