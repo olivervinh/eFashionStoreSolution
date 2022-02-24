@@ -10,6 +10,15 @@ namespace eFashionStore.Model.Models.Catalogs
 {
     public class Color
     {
+        public Color(int id, string name, int? fkCategoryId, Category category, ICollection<ProductVariant> productVariants)
+        {
+            Id = id;
+            Name = name;
+            FkCategoryId = fkCategoryId;
+            Category = category;
+            ProductVariants = productVariants;
+        }
+
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }

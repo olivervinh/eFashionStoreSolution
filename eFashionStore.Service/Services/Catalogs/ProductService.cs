@@ -1,4 +1,5 @@
-﻿using eFahionStore.Common.ViewModal.Catalog;
+﻿using eFahionStore.Common.ResponseViewModels.Catalog;
+using eFahionStore.Common.ViewModal.Catalog;
 using eFashionStore.Data.EF;
 using eFashionStore.Data.Infrastructure;
 using eFashionStore.Data.Repositories.Catalogs;
@@ -16,7 +17,7 @@ namespace eFashionStore.Service.Services.Catalogs
 {
     public interface IProductService : IBaseService<Product>
     {
-
+        public Task<IEnumerable<ProductJoinImage>> GetProductsPaginationListAsync(int pageNumber, int pageSize);
     }
     public class ProductService : BaseService<Product>, IProductService
     {
@@ -26,5 +27,9 @@ namespace eFashionStore.Service.Services.Catalogs
             _productRepository = productRepository;
         }
 
+        public async Task<IEnumerable<ProductJoinImage>> GetProductsPaginationListAsync(int pageNumber, int pageSize)
+        {
+            return null;
+        }
     }
 }

@@ -25,9 +25,9 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
             _imageBlogService = imageBlogService;
         }
         [HttpGet("GetPaginationList")]
-        public async Task<IEnumerable<BlogJoinImage>> GetBlogsPaginationList(int pageNumber, int pageSize)
+        public async Task<IEnumerable<BlogJoinImage>> GetCustomBlogsPaginationListAsync(int pageNumber, int pageSize)
         {
-           return await _blogService.GetBlogsPaginationListAsync(pageNumber, pageSize);
+           return await _blogService.GetCustomBlogsPaginationListAsync(pageNumber, pageSize);
         }
         [HttpPost]
         public async Task<IActionResult> CreateBlog([FromForm] BlogDto blogDto)

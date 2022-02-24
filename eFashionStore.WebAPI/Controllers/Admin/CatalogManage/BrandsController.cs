@@ -39,7 +39,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
             }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBrand(int id, BrandDto brandDto)
+        public async Task<IActionResult> UpdateBrand(int id, [FromForm] BrandDto brandDto)
         {
             try
             {

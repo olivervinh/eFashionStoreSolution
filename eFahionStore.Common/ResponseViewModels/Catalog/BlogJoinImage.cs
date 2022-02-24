@@ -11,7 +11,7 @@ namespace eFahionStore.Common.ViewModal.Catalog
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public string image { get; set; }
-        public string nameUser { get; set; }
+        public string Image { get; set; }
+        public string UserFullName { get; set; }
     }
 }

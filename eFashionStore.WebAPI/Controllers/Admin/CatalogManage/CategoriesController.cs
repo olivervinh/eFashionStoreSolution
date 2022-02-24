@@ -20,7 +20,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
             _categoryService = categoryService;
         }
         [HttpGet("GetPaginationList")]
-        public async Task<IEnumerable<Category>> GetBrandsPaginationList(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Category>> GetCategoriesPaginationList(int pageNumber, int pageSize)
         {
             return await _categoryService.GetPaginationListAsync(pageNumber, pageSize);
         }
@@ -39,7 +39,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
             }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBrand(int id, CategoryDto categoryDto)
+        public async Task<IActionResult> UpdateBrand(int id,[FromForm] CategoryDto categoryDto)
         {
             try
             {
