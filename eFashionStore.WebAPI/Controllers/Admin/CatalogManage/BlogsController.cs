@@ -27,14 +27,14 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
         [HttpGet("GetPaginationList")]
         public async Task<IEnumerable<BlogAndImage>> GetBlogsPaginationList(int pageNumber, int pageSize)
         {
-           return await _blogService.GetBlogsPaginationList(pageNumber, pageSize);
+           return await _blogService.GetBlogsPaginationListAsync(pageNumber, pageSize);
         }
         [HttpPost]
         public async Task<IActionResult> CreateBlog([FromForm] BlogDto blogDto)
         {
             try
             {
-                var blog = new Blog(blogDto.Content, null, null, blogDto.Content,null);              
+                var blog = new Blog(0,blogDto.Content, null, null, blogDto.Content,null);              
                 await _blogService.Add(blog);
                 int index = 0;
                 foreach (var formFile in blogDto.ImageBlogs)
@@ -49,12 +49,12 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
                         }
                         if (index == 0)
                         {
-                            var imageBlog = new ImageBlog("blog_" + blog.Id, true, blog.Id, null);                         
+                            var imageBlog = new ImageBlog(0,"blog_" + blog.Id, true, blog.Id, null);                         
                             await _imageBlogService.Add(imageBlog);
                         }
                         else
                         {
-                            var imageBlog = new ImageBlog("blog_" + blog.Id, false, blog.Id, null);
+                            var imageBlog = new ImageBlog(0,"blog_" + blog.Id, false, blog.Id, null);
                             await _imageBlogService.Add(imageBlog);
                         }
 
@@ -72,16 +72,15 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
         public async Task<IActionResult> UpdateBlog(int id,[FromForm] BlogDto blogDto)
         {
             try
-            {
-                // delete images base blog updating
+            {               
                 var imageBlogBaseBlogList = await _imageBlogService.GetImageBlogsBaseFkBlogId(id);
                 foreach(var item in imageBlogBaseBlogList)
                 {
                     System.IO.File.Delete(Path.Combine("wwwroot/Images/ImagesBlog", item.ImageName));
                 }
                 await _imageBlogService.DeleteRange(imageBlogBaseBlogList);
-                var blog = new Blog(blogDto.Content, null, null, blogDto.Content, null);
-                await _blogService.Add(blog);
+                var blog = new Blog(id,blogDto.Content, null, null, blogDto.Content, null);
+                await _blogService.Update(blog);
                 int index = 0;
                 foreach (var formFile in blogDto.ImageBlogs)
                 {
@@ -95,24 +94,24 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
                         }
                         if (index == 0)
                         {
-                            var imageBlog = new ImageBlog("blog_" + blog.Id, true, blog.Id, null);
+                            var imageBlog = new ImageBlog(0,"blog_" + blog.Id, true, blog.Id, null);
                             await _imageBlogService.Add(imageBlog);
                         }
                         else
                         {
-                            var imageBlog = new ImageBlog("blog_" + blog.Id, false, blog.Id, null);
+                            var imageBlog = new ImageBlog(0,"blog_" + blog.Id, false, blog.Id, null);
                             await _imageBlogService.Add(imageBlog);
                         }
 
                     }
                     index++;
                 }
+                return Ok();
             }
             catch(Exception ex)
             {
                 return BadRequest(ex);
             }
-            return Ok();
         }
         [HttpDelete ("{id}")]
         public async Task<IActionResult> DeleteBlog(int id)
@@ -128,12 +127,13 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
                 var blog = await _blogService.GetSingleAsyncById(id);
                 if (result)
                     await _blogService.Delete(blog);
+                 return Ok();
             }
             catch(Exception ex)
             {
                 return BadRequest(ex);
             }
-            return Ok();
+           
         }
     }
 }

@@ -68,9 +68,14 @@ namespace eFashionStore.Service.Intrastructure
             }
         }
 
-        public Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.GetAllAsync();
+        }
+
+        public Task<IEnumerable<T>> GetPaginationListAsync(int pageNumber, int pageSize)
+        {
+            return _repository.GetPaginationListAsync(pageNumber, pageSize);
         }
 
         public async Task<T> GetSingleAsyncById(int id)

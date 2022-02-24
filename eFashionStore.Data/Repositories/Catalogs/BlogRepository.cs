@@ -14,7 +14,7 @@ namespace eFashionStore.Data.Repositories.Catalogs
 {
     public interface IBlogRepository : IBaseRepository<Blog>
     {
-        public Task<IEnumerable<BlogAndImage>> GetBlogsPaginationList(int pageNumber, int pageSize);
+        public Task<IEnumerable<BlogAndImage>> GetBlogsPaginationListAsync(int pageNumber, int pageSize);
        
     }
     public class BlogRepository : BaseRepository<Blog>, IBlogRepository
@@ -25,7 +25,7 @@ namespace eFashionStore.Data.Repositories.Catalogs
             _context = context;
         }
 
-        public async Task<IEnumerable<BlogAndImage>> GetBlogsPaginationList(int pageNumber, int pageSize)
+        public async Task<IEnumerable<BlogAndImage>> GetBlogsPaginationListAsync(int pageNumber, int pageSize)
         {
             var blogsList =  (from b in _context.Blogs
                                  join ib in _context.ImageBlogs.Where(x => x.IsThumbnail == true)

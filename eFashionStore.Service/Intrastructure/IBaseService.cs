@@ -10,6 +10,7 @@ namespace eFashionStore.Service.Intrastructure
     public interface IBaseService<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetPaginationListAsync(int pageNumber, int pageSize);
         Task<bool> Add(T entity);
         Task<bool> Update(T entity);
         Task<bool> Delete(T entity);
