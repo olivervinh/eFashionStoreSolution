@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eFahionStore.Common.ViewModal.Catalog
 {
-    public class BlogAndImage
+    public class BlogJoinImage
     {
         public int Id { get; set; }
         public string Title { get; set; }

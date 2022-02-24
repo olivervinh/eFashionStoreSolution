@@ -14,7 +14,7 @@ namespace eFashionStore.Data.Repositories.Catalogs
 {
     public interface IBlogRepository : IBaseRepository<Blog>
     {
-        public Task<IEnumerable<BlogAndImage>> GetBlogsPaginationListAsync(int pageNumber, int pageSize);
+        public Task<IEnumerable<BlogJoinImage>> GetBlogsPaginationListAsync(int pageNumber, int pageSize);
        
     }
     public class BlogRepository : BaseRepository<Blog>, IBlogRepository
@@ -25,12 +25,12 @@ namespace eFashionStore.Data.Repositories.Catalogs
             _context = context;
         }
 
-        public async Task<IEnumerable<BlogAndImage>> GetBlogsPaginationListAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<BlogJoinImage>> GetBlogsPaginationListAsync(int pageNumber, int pageSize)
         {
             var blogsList =  (from b in _context.Blogs
                                  join ib in _context.ImageBlogs.Where(x => x.IsThumbnail == true)
                                  on b.Id equals ib.FkBlogId
-                                 select new BlogAndImage()
+                                 select new BlogJoinImage()
                                  {
                                      Id = b.Id,
                                      Title = b.Title,
@@ -38,7 +38,7 @@ namespace eFashionStore.Data.Repositories.Catalogs
                                      image = ib.ImageName,
                                      nameUser = "Admin",
                                  });
-            var blogsPaginationList = PagedPaginationHelper<BlogAndImage>.ToPagedListAsync(blogsList, pageNumber, pageSize);
+            var blogsPaginationList = PagedPaginationHelper<BlogJoinImage>.ToPagedListAsync(blogsList, pageNumber, pageSize);
             return await blogsPaginationList;
         }
 
