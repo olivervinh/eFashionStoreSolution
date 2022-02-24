@@ -11,6 +11,19 @@ namespace eFashionStore.Model.Models.Catalogs
 {
     public class Blog
     {
+        public Blog()
+        {
+        }
+
+        public Blog(string title, string content, ICollection<ImageBlog> imageBlogs, string fkAppUserId, AppUser appUser)
+        {
+            Title = title;
+            Content = content;
+            ImageBlogs = imageBlogs;
+            FkAppUserId = fkAppUserId;
+            AppUser = appUser;
+        }
+
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }

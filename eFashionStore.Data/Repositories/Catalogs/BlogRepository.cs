@@ -1,4 +1,5 @@
-﻿using eFahionStore.Common.ViewModal.Catalog;
+﻿using eFahionStore.Common.Helpers;
+using eFahionStore.Common.ViewModal.Catalog;
 using eFashionStore.Data.EF;
 using eFashionStore.Data.Infrastructure;
 using eFashionStore.Model.Models.Catalogs;
@@ -13,7 +14,8 @@ namespace eFashionStore.Data.Repositories.Catalogs
 {
     public interface IBlogRepository : IBaseRepository<Blog>
     {
-        Task<IEnumerable<BlogAndImage>> GetBlogAndImagesList();
+        public Task<IEnumerable<BlogAndImage>> GetBlogsPaginationList(int pageNumber, int pageSize);
+       
     }
     public class BlogRepository : BaseRepository<Blog>, IBlogRepository
     {
@@ -23,19 +25,23 @@ namespace eFashionStore.Data.Repositories.Catalogs
             _context = context;
         }
 
-        public async Task<IEnumerable<BlogAndImage>> GetBlogAndImagesList()
+        public async Task<IEnumerable<BlogAndImage>> GetBlogsPaginationList(int pageNumber, int pageSize)
         {
-            var blogs = _context.Blogs.Select(b => new BlogAndImage()
-            {
-
-                Id = b.Id,
-                Title = b.Title,
-                Content = b.Content,
-                image = _context.ImageBlogs.Where(s => s.FkBlogId == b.Id).Select(s => s.ImageName).FirstOrDefault(),
-                nameUser = _context.AppUsers.Where(s => s.Id == b.FkAppUserId).Select(s => s.FirstName + " " + s.LastName).FirstOrDefault(),
-
-            });
-            return await blogs.ToListAsync();
+            var blogsList =  (from b in _context.Blogs
+                                 join ib in _context.ImageBlogs.Where(x => x.IsThumbnail == true)
+                                 on b.Id equals ib.FkBlogId
+                                 select new BlogAndImage()
+                                 {
+                                     Id = b.Id,
+                                     Title = b.Title,
+                                     Content = b.Content,
+                                     image = ib.ImageName,
+                                     nameUser = "Admin",
+                                 });
+            var blogsPaginationList = PagedPaginationHelper<BlogAndImage>.ToPagedListAsync(blogsList, pageNumber, pageSize);
+            return await blogsPaginationList;
         }
+
+       
     }
 }

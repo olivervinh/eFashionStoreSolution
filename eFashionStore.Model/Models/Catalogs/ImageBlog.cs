@@ -10,6 +10,14 @@ namespace eFashionStore.Model.Models.Catalogs
 {
     public class ImageBlog
     {
+        public ImageBlog(string imageName, bool isThumbnail, int? fkBlogId, Blog blog)
+        {
+            ImageName = imageName;
+            IsThumbnail = isThumbnail;
+            FkBlogId = fkBlogId;
+            Blog = blog;
+        }
+
         [Key]
         public int Id { get; set; }
         public string ImageName { get; set; }

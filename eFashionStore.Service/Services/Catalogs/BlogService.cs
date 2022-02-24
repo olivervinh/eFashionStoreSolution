@@ -14,7 +14,7 @@ namespace eFashionStore.Data.Repositories.Catalogs
 {
     public interface IBlogService : IBaseService<Blog>
     {
-        Task<IEnumerable<BlogAndImage>> GetBlogAndImagesList();
+        public Task<IEnumerable<BlogAndImage>> GetBlogsPaginationList(int pageNumber, int pageSize);
     }
     public class BlogService : BaseService<Blog>, IBlogService
     {
@@ -23,10 +23,9 @@ namespace eFashionStore.Data.Repositories.Catalogs
         {
             _blogRepository = blogRepository;
         }
-        public async Task<IEnumerable<BlogAndImage>> GetBlogAndImagesList()
+        public async Task<IEnumerable<BlogAndImage>> GetBlogsPaginationList(int pageNumber, int pageSize)
         {
-
-            return await _blogRepository.GetBlogAndImagesList();
+            return await _blogRepository.GetBlogsPaginationList(pageNumber,pageSize);
         }
     }
 }

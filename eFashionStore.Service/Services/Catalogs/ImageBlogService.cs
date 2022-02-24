@@ -16,7 +16,7 @@ namespace eFashionStore.Service.Services.Catalogs
 {
     public interface IImageBlogService : IBaseService<ImageBlog>
     {
-
+        public Task<IEnumerable<ImageBlog>> GetImageBlogsBaseFkBlogId(int FkBlogId);
     }
     public class ImageBlogService : BaseService<ImageBlog>, IImageBlogService
     {
@@ -26,5 +26,9 @@ namespace eFashionStore.Service.Services.Catalogs
             _imageBlogRepository = imageBlogRepository;
         }
 
+        public async Task<IEnumerable<ImageBlog>> GetImageBlogsBaseFkBlogId(int FkBlogId)
+        {
+            return await _imageBlogRepository.GetImageBlogsBaseFkBlogId(FkBlogId);
+        }
     }
 }
