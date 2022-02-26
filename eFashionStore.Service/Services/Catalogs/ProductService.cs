@@ -19,7 +19,7 @@ namespace eFashionStore.Service.Services.Catalogs
 {
     public interface IProductService : IBaseService<Product>
     {
-        public Task<IEnumerable<ProductJoinImage>> GetProductsPaginationListAsync(int pageNumber, int pageSize);
+        public Task<IEnumerable<ProductJoinImageCategoryBrand>> GetProductsPaginationListAsync(int pageNumber, int pageSize);
         public Task<bool> CreateVariantProductBaseProduct(ProductDto productDto);
         public Task<bool> UpdateVariantProductBaseProduct(int id,ProductDto productDto);
         public Task<bool> DeleteImageBaseProduct(int id);
@@ -35,7 +35,7 @@ namespace eFashionStore.Service.Services.Catalogs
             _imageProductService = imageProductService;
             _productVariantService = productVariantService;
         }
-        public async Task<IEnumerable<ProductJoinImage>> GetProductsPaginationListAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<ProductJoinImageCategoryBrand>> GetProductsPaginationListAsync(int pageNumber, int pageSize)
         {
             return null;
         }

@@ -24,7 +24,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
             _imageProductService = imageProductService;
         }
         [HttpGet("GetPaginationList")]
-        public async Task<IEnumerable<ProductJoinImage>> GetProductsPaginationList(int pageNumber, int pageSize)
+        public async Task<IEnumerable<ProductJoinImageCategoryBrand>> GetProductsPaginationList(int pageNumber, int pageSize)
         {
             return await _productService.GetProductsPaginationListAsync(pageNumber, pageSize);
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eFahionStore.Common.ResponseViewModels.Catalog
 {
-    public class ProductJoinImage
+    public class ProductJoinImageCategoryBrand
     {
         public int Id { get; set; }
         public string Name { get; set; }
