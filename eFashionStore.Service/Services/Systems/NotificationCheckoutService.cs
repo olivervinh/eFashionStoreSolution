@@ -4,7 +4,7 @@ using eFashionStore.Model.Models.Systems;
 using eFashionStore.Service.Intrastructure;
 
 
-namespace eFashionStore.Service.Services.Catalogs
+namespace eFashionStore.Service.Services.Systems
 {
     public interface INotificationCheckoutService : IBaseService<NotificationCheckout>
     {

@@ -10,6 +10,10 @@ namespace eFashionStore.Model.Models.Catalogs
 {
     public class Size
     {
+        public Size()
+        {
+
+        }
         public Size(int id, string name, int? fkCategoryId, Category category, ICollection<ProductVariant> productVariants)
         {
             Id = id;

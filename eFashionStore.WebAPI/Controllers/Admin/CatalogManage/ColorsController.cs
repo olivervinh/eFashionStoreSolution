@@ -44,7 +44,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
             try
             {
                 var color = new Color(id, colorDto.Name, colorDto.FkCategoryId, null, null);
-                await _colorService.Add(color);
+                await _colorService.Update(color);
                 return Ok();
             }
             catch (Exception ex)

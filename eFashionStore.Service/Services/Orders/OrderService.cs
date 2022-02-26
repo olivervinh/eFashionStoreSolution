@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace eFashionStore.Service.Services.Catalogs
+namespace eFashionStore.Service.Services.Orders
 {
     public interface IOrderService : IBaseService<Order>
     {

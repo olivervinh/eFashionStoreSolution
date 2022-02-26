@@ -16,13 +16,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
+
 namespace eFashionStore.Data.Infrastructure
 {
     public static class DataServiceCollection
     {
-        private static string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
-        private static readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        public static string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
+        public static readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         public static IConfiguration Configuration { get; }
         public static IServiceCollection DataRegisterServices(this IServiceCollection services)
         {
@@ -48,6 +48,7 @@ namespace eFashionStore.Data.Infrastructure
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IDiscountCodeRepository, DiscountCodeRepository>();
             #endregion
 
             #region Repositories Others
@@ -64,19 +65,9 @@ namespace eFashionStore.Data.Infrastructure
             services.AddTransient<IAppUserRepository, AccountRespository>();
             services.AddTransient<IAuthHistoryRepository, AuthHistoryRepository>();
             services.AddTransient<IJobSeekerRepository, JobSeekerRepository>();
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            services.Configure<JwtIssuerOptions>(options =>
-            {
-                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-                options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
-            });
-            services.AddSingleton<IJwtFactory, JwtFactory>();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
-            });
-            services.AddAutoMapper();
+            services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
+
             #endregion
 
             #region Repositories WareHouses

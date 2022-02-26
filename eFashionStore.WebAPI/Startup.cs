@@ -1,4 +1,5 @@
 using eFahionStore.Common.Exceptions;
+using eFahionStore.Common.Helpers;
 using eFashionStore.Data.EF;
 using eFashionStore.Data.Infrastructure;
 using eFashionStore.Model.Models.Users;
@@ -10,7 +11,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
+using AutoMapper;
+using eFahionStore.Common.RequestViewModels.Users;
 
 namespace eFashionStore.WebAPI
 {
@@ -49,8 +54,18 @@ namespace eFashionStore.WebAPI
             services.AddDbContext<EFashionStoreDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString(SystemContants.MainConnectionString)));
             #endregion
-
-           
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+            });
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(DataServiceCollection._signingKey, SecurityAlgorithms.HmacSha256);
+            });
+            services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddIdentity<AppUser, IdentityRole>
                 (o =>
                 {
@@ -63,8 +78,8 @@ namespace eFashionStore.WebAPI
                 })
                 .AddEntityFrameworkStores<EFashionStoreDbContext>()
                 .AddDefaultTokenProviders();
-          
 
+            services.AddAutoMapper();
 
         }
 
@@ -77,9 +92,24 @@ namespace eFashionStore.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eFashionStore.WebAPI v1"));
             }
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
 
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = DataServiceCollection._signingKey,
+
+                RequireExpirationTime = false,
+                ValidateLifetime = false,
+                ClockSkew = TimeSpan.Zero
+            };
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();

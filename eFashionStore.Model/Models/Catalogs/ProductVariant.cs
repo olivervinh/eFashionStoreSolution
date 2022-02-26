@@ -11,6 +11,23 @@ namespace eFashionStore.Model.Models.Catalogs
 {
     public class ProductVariant
     {
+        public ProductVariant()
+        {
+        }
+
+        public ProductVariant(int id, int inventoryQuantity, int? fkProductId, Product product, int? fkColorId, Color color, int? fkSizeId, Size size, ICollection<OrderDetail> orderDetails)
+        {
+            Id = id;
+            InventoryQuantity = inventoryQuantity;
+            FkProductId = fkProductId;
+            Product = product;
+            FkColorId = fkColorId;
+            Color = color;
+            FkSizeId = fkSizeId;
+            Size = size;
+            OrderDetails = orderDetails;
+        }
+
         [Key]
         public int Id { get; set; }
         public int InventoryQuantity { get; set; }

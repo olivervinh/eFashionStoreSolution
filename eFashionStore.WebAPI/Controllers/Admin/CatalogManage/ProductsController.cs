@@ -31,108 +31,26 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromForm] ProductDto productDto)
         {
-            try
-            {
-                var product = new Product();
-                await _productService.Add(product);
-                int index = 0;
-                foreach (var formFile in productDto.ImageProducts)
-                {
-                    if (formFile.Length > 0 && formFile.Length < 2048)
-                    {
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/Pro", "product_" + product.Id);
-
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await formFile.CopyToAsync(stream);
-                        }
-                        if (index == 0)
-                        {
-                            var imageProduct = new ImageProduct();
-                            await _imageProductService.Add(imageProduct);
-                        }
-                        else
-                        {
-                            var imageProduct = new ImageProduct();
-                            await _imageProductService.Add(imageProduct);
-                        }
-
-                    }
-                    index++;
-                }
+            var result = await _productService.CreateVariantProductBaseProduct(productDto);
+            if (result)
                 return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return BadRequest();
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductDto productDto)
         {
-            try
-            {
-                var imageProductBaseProductList = await _imageProductService.GetImageProductsBaseFkBlogId(id);
-                foreach (var item in imageProductBaseProductList)
-                {
-                    System.IO.File.Delete(Path.Combine("wwwroot/Images/ImagesProduct", item.ImageName));
-                }
-                await _imageProductService.DeleteRange(imageProductBaseProductList);
-                var product = new Product();
-                await _productService.Update(product);
-                int index = 0;
-                foreach (var formFile in productDto.ImageProducts)
-                {
-                    if (formFile.Length > 0 && formFile.Length < 2048)
-                    {
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ImagesProduct", "product_" + product.Id);
-
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await formFile.CopyToAsync(stream);
-                        }
-                        if (index == 0)
-                        {
-                            var imageProduct = new ImageProduct(0, "product_" + product.Id, true, product.Id, null);
-                            await _imageProductService.Add(imageProduct);
-                        }
-                        else
-                        {
-                            var imageProduct = new ImageProduct(0, "product_" + product.Id, false, product.Id, null);
-                            await _imageProductService.Add(imageProduct);
-                        }
-
-                    }
-                    index++;
-                }
+            var result = await _productService.UpdateVariantProductBaseProduct(id,productDto);
+            if (result)
                 return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return BadRequest();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            try
-            {
-                var imageProductBaseProductList = await _imageProductService.GetImageProductsBaseFkBlogId(id);
-                foreach (var item in imageProductBaseProductList)
-                {
-                    System.IO.File.Delete(Path.Combine("wwwroot/Images/ImagesProduct", item.ImageName));
-                }
-                var result = Task.Run(async () => await _imageProductService.DeleteRange(imageProductBaseProductList)).Result;
-                var product = await _productService.GetSingleAsyncById(id);
-                if (result)
-                    await _productService.Delete(product);
+            var result = await _productService.DeleteImageBaseProduct(id);
+            if (result)
                 return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-
+            return BadRequest();
         }
     }
 }

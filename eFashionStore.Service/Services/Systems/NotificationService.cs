@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace eFashionStore.Service.Services.Catalogs
+namespace eFashionStore.Service.Services.Systems
 {
     public interface INotificationService : IBaseService<Notification>
     {

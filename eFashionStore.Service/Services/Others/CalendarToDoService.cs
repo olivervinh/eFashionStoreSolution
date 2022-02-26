@@ -4,7 +4,7 @@ using eFashionStore.Model.Models.Others;
 using eFashionStore.Service.Intrastructure;
 
 
-namespace eFashionStore.Service.Services.Catalogs
+namespace eFashionStore.Service.Services.Others
 {
     public interface ICalendarToDoService : IBaseService<CalendarToDo>
     {

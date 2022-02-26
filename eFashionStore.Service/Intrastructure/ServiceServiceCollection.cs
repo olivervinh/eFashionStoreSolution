@@ -2,7 +2,11 @@
 using eFashionStore.Data.Repositories.Catalogs;
 using eFashionStore.Data.Repositories.Users;
 using eFashionStore.Service.Services.Catalogs;
+using eFashionStore.Service.Services.Orders;
+using eFashionStore.Service.Services.Others;
+using eFashionStore.Service.Services.Systems;
 using eFashionStore.Service.Services.Users;
+using eFashionStore.Service.Services.WareHouses;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -35,6 +39,7 @@ namespace eFashionStore.Service.Intrastructure
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<IOrderDetailService, OrderDetailService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IDiscountCodeService, DiscountCodeService>();
             #endregion
 
             #region Repositories Others
@@ -43,17 +48,22 @@ namespace eFashionStore.Service.Intrastructure
             #endregion
 
             #region Repositories Systems
-
+            services.AddTransient<INotificationCheckoutService, NotificationCheckoutService>();
+            services.AddTransient<INotificationService, NotificationService>();
             #endregion
 
             #region Repositories Users
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAuthHistoryService, AuthHistoryService>();
             services.AddTransient<IJobSeekerService, JobSeekerService>();
+            services.AddTransient<IAppUserService, AppUserService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
             #endregion
 
             #region Repositories WareHouses
-
+            services.AddTransient<ISupplierService, SupplierService>();
+            services.AddTransient<IWareHouseBillDetailService, WareHouseBillDetailService>();
+            services.AddTransient<IWareHouseBillService, WareHouseBillService>();
             #endregion
 
             return services;

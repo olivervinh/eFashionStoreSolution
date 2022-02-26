@@ -4,7 +4,7 @@ using eFashionStore.Model.Models.WareHouses;
 using eFashionStore.Service.Intrastructure;
 
 
-namespace eFashionStore.Service.Services.Catalogs
+namespace eFashionStore.Service.Services.WareHouses
 {
     public interface ISupplierService : IBaseService<Supplier>
     {

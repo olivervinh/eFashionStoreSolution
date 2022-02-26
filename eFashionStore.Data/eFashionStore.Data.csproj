@@ -28,4 +28,8 @@
     <ProjectReference Include="..\eFashionStore.Model\eFashionStore.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\RevenueStatistics\" />
+  </ItemGroup>
+
 </Project>

@@ -9,6 +9,10 @@ namespace eFashionStore.Model.Models.Catalogs
 {
     public class Brand
     {
+        public Brand()
+        {
+
+        }
         public Brand(int id,string name)
         {
             Id = id;

@@ -10,6 +10,22 @@ namespace eFashionStore.Model.Models.WareHouses
 {
     public class Supplier
     {
+        public Supplier()
+        {
+
+        }
+
+        public Supplier(int id, string name, string phoneNumber, string info, string address, ICollection<WareHouseBill> wareHouseBills, ICollection<Product> products)
+        {
+            Id = id;
+            Name = name;
+            PhoneNumber = phoneNumber;
+            Info = info;
+            Address = address;
+            WareHouseBills = wareHouseBills;
+            Products = products;
+        }
+
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }

@@ -25,5 +25,6 @@ namespace eFahionStore.Common.RequestViewModels.Catalog
         public int? FkCategoryId { get; set; }
         public int? FkSupplierId { get; set; }
         public virtual ICollection<IFormFile> ImageProducts { get; set; }
+        public virtual  ICollection<ProductVariantDto> ProductVariantDtos { get; set; }
     }
 }

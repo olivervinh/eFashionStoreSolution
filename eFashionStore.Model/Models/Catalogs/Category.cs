@@ -9,6 +9,10 @@ namespace eFashionStore.Model.Models.Catalogs
 {
     public class Category
     {
+        public Category()
+        {
+
+        }
         public Category(int id, string name)
         {
             Id = id;
