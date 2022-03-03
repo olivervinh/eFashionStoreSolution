@@ -1,13 +1,71 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    @await Html.PartialAsync("Partials/Head/_HeadPartial.cshtml")
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <!-- Begin page -->
+    <div id="wrapper">
+        <!-- Topbar Start -->
+        @await Html.PartialAsync("Partials/Body/Wrapper/_NavbarCustomPartial.cshtml")
+        <!-- end Topbar -->
+        <!-- ========== Left Sidebar Start ========== -->
+        @await Html.PartialAsync("Partials/Body/Wrapper/_LeftSideBarPartial.cshtml")
+        <!-- Left Sidebar End -->
+        <!-- Start Page Content here -->
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                                        <li class="breadcrumb-item active">Dashboard</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Dashboard</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    @RenderBody();
+
+                </div>
+                <!-- end container-fluid -->
+
+            </div>
+            <!-- end content -->
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            2016 - 2019 &copy; Uplon theme by <a href="">Coderthemes</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+        <!-- End Page content -->
     </div>
+    <!-- END wrapper -->
+    <!-- Right Sidebar -->
+    @await Html.PartialAsync("Partials/Body/RightBar/_RightBarPartial.cshtml")
+    <!-- /Right-bar -->
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    @await Html.PartialAsync("Partials/Body/JavaScript/_JavaScriptPartial.cshtml")
+
 </body>
+
 </html>
