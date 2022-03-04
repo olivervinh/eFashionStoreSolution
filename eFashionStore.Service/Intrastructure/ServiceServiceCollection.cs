@@ -1,5 +1,4 @@
 ﻿using eFashionStore.Data.Infrastructure;
-using eFashionStore.Data.Repositories.Catalogs;
 using eFashionStore.Data.Repositories.Users;
 using eFashionStore.Service.Services.Catalogs;
 using eFashionStore.Service.Services.Orders;
@@ -22,11 +21,11 @@ namespace eFashionStore.Service.Intrastructure
         {
             services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
             #region Repositories Catalogs
+            services.AddTransient<IImageBlogService,ImageBlogService>();
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IBrandService, BrandService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IColorService, ColorService>();
-            services.AddTransient<IImageBlogService, ImageBlogService>();
             services.AddTransient<IImageProductService, ImageProductService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductReviewService, ProductReviewService>();

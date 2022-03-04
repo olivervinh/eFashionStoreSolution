@@ -20,7 +20,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
             _brandService = brandService;
         }
         [HttpGet("GetPaginationList")]
-        public async Task<IEnumerable<Brand>> GetBrandsPaginationList(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Brand>> GetBrandsPaginationList(int pageNumber = 2, int pageSize=3)
         {
             return await _brandService.GetPaginationListAsync(pageNumber, pageSize);
         }

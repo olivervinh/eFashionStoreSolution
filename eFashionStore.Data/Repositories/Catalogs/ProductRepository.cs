@@ -53,7 +53,7 @@ namespace eFashionStore.Data.Repositories.Catalogs
                                     SupplierName = s.Name,
                                     Image = ip.ImageName,
                                 });
-            var productsPaginationList = PagedPaginationHelper<ProductJoinImageCategoryBrand>.ToPagedListAsync(productsList, pageNumber, pageSize);
+            var productsPaginationList = PagedPaginationHelper<ProductJoinImageCategoryBrand>.CreateAsync(productsList, pageNumber, pageSize);
             return await productsPaginationList;
         }
     }

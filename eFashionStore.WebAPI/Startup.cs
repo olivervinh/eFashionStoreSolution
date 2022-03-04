@@ -31,6 +31,7 @@ namespace eFashionStore.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             #region service repositories
             services.DataRegisterServices();
             #endregion
@@ -54,6 +55,7 @@ namespace eFashionStore.WebAPI
             services.AddDbContext<EFashionStoreDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString(SystemContants.MainConnectionString)));
             #endregion
+            #region more_service
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             services.AddAuthorization(options =>
             {
@@ -80,7 +82,7 @@ namespace eFashionStore.WebAPI
                 .AddDefaultTokenProviders();
 
             services.AddAutoMapper();
-
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

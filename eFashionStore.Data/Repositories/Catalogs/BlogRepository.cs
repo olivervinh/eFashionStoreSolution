@@ -38,7 +38,7 @@ namespace eFashionStore.Data.Repositories.Catalogs
                                      Image = ib.ImageName,
                                      UserFullName = "Admin",
                                  });
-            var blogsPaginationList = PagedPaginationHelper<BlogJoinImage>.ToPagedListAsync(blogsList, pageNumber, pageSize);
+            var blogsPaginationList = PagedPaginationHelper<BlogJoinImage>.CreateAsync(blogsList, pageNumber, pageSize);
             return await blogsPaginationList;
         }
 

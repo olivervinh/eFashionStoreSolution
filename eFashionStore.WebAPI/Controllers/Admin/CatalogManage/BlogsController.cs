@@ -1,6 +1,5 @@
 ﻿using eFahionStore.Common.RequestViewModels.Catalog;
 using eFahionStore.Common.ViewModal.Catalog;
-using eFashionStore.Data.Repositories.Catalogs;
 using eFashionStore.Model.Models.Catalogs;
 using eFashionStore.Service.Services.Catalogs;
 using Microsoft.AspNetCore.Http;

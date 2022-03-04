@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.WebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ProductsController : Controller
     {
         // GET: ProductsController

@@ -1,5 +1,6 @@
 ﻿Scaffolding has generated all the files and added the required dependencies.
-
+https://localhost:44372/api/admin/catalog/brands/GetPaginationList
+https://localhost:44374/Admin/Brands/Index
 However the Application's Startup code may require additional changes for things to work end to end.
 Add the following code to the Configure method in your Application's Startup class if not already done:
 

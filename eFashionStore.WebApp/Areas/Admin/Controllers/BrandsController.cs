@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eFashionStore.Service.Services.Catalogs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,18 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.WebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class BrandsController : Controller
     {
-        // GET: BrandsController
-        public ActionResult Index()
+        private IBrandService _brandService;
+        public BrandsController(IBrandService brandService)
         {
-            return View();
+            _brandService = brandService;
+        }
+        // GET: BrandsController
+        public async Task<IActionResult> Index(int? pageNumber)
+        {        
+            return View(await _brandService.GetPaginationListAsync(pageNumber??1, 5));
         }
 
         // GET: BrandsController/Details/5

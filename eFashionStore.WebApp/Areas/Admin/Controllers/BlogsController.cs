@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eFashionStore.Service.Services.Catalogs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,19 @@ using System.Threading.Tasks;
 
 namespace eFashionStore.WebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class BlogsController : Controller
     {
-        // GET: BlogsController
-        public ActionResult Index()
+        private IBlogService _blogService;        
+        public BlogsController(IBlogService blogService)
         {
-            return View();
+            _blogService = blogService;
+        }
+        // GET: BlogsController
+        public async Task<IActionResult> Index ([FromQuery(Name = "pageNumber")] int pageNumber, [FromQuery(Name = "pageSize")] int pageSize)
+        {
+            var blogsList = await _blogService.GetCustomBlogsPaginationListAsync(pageNumber, pageSize);
+            return View(blogsList);
         }
 
         // GET: BlogsController/Details/5
