@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eFahionStore.Common.RequestViewModels.Catalog;
+using eFashionStore.Service.Services.Catalogs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,81 +10,57 @@ using System.Threading.Tasks;
 namespace eFashionStore.WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ColorsController : Controller
+    public class ColorController : Controller
     {
-        // GET: ColorsController1
-        public ActionResult Index()
+        private IColorService _colorService;
+        public ColorController(IColorService colorService)
         {
-            return View();
+            _colorService = colorService;
+        }
+        // GET: ColorsController
+        [HttpGet]
+        public async Task<IActionResult> Index(string searchString, int? pageNumber, string sortOrder)
+        {
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["NameSortParm"] = sortOrder == "name" ? "name_desc" : "name";
+            ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            return View(await _colorService.GetColorsSearchSortOrderPagination(searchString, pageNumber, sortOrder));
         }
 
-        // GET: ColorsController1/Details/5
-        public ActionResult Details(int id)
+        // GET: ColorsController/Details/5
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            return Ok(await _colorService.GetSingleAsyncById(id));
         }
-
-        // GET: ColorsController1/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ColorsController1/Create
+        // POST: ColorsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([FromBody] ColorDto colorDto)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _colorService.CreateNewColor(colorDto);
+            if (result)
+                return Ok();
+            return BadRequest();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit([FromBody] ColorDto colorDto)
+        {
+
+            var result = await _colorService.UpdateColor(colorDto);
+            if (result)
+                return Ok();
+            return BadRequest();
         }
 
-        // GET: ColorsController1/Edit/5
-        public ActionResult Edit(int id)
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] ColorDto colorDto)
         {
-            return View();
+            var result = await _colorService.DeleleColor(colorDto);
+            if (result)
+                return Ok();
+            return BadRequest();
         }
 
-        // POST: ColorsController1/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ColorsController1/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ColorsController1/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

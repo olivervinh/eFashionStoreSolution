@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eFahionStore.Common.RequestViewModels.Catalog;
+using eFashionStore.Model.Models.Catalogs;
+using eFashionStore.Service.Services.Catalogs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,79 +13,55 @@ namespace eFashionStore.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoriesController : Controller
     {
-        // GET: CategoriesController
-        public ActionResult Index()
+        private ICategoryService _categoryService;
+        public CategoriesController(ICategoryService categoryService)
         {
-            return View();
+            _categoryService = categoryService;
+        }
+        // GET: CategorysController
+        [HttpGet]
+        public async Task<IActionResult> Index(string searchString, int? pageNumber, string sortOrder)
+        {
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["NameSortParm"] = sortOrder == "name" ? "name_desc" : "name";
+            ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            return View(await _categoryService.GetCategoriesSearchSortOrderPagination(searchString, pageNumber, sortOrder));
         }
 
-        // GET: CategoriesController/Details/5
-        public ActionResult Details(int id)
+        // GET: CategorysController/Details/5
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            return Ok(await _categoryService.GetSingleAsyncById(id));
         }
-
-        // GET: CategoriesController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CategoriesController/Create
+        // POST: CategorysController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([FromBody] CategoryDto categoryDto)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _categoryService.CreateNewCategory(categoryDto);
+            if (result)
+                return Ok();
+            return BadRequest();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit([FromBody] CategoryDto categoryDto)
+        {
+
+            var result = await _categoryService.UpdateCategory(categoryDto);
+            if (result)
+                return Ok();
+            return BadRequest();
         }
 
-        // GET: CategoriesController/Edit/5
-        public ActionResult Edit(int id)
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] CategoryDto categoryDto)
         {
-            return View();
+            var result = await _categoryService.DeleleCategory(categoryDto);
+            if (result)
+                return Ok();
+            return BadRequest();
         }
 
-        // POST: CategoriesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CategoriesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CategoriesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -1,8 +1,325 @@
-﻿
+﻿@model eFahionStore.Common.Helpers.PagedPaginationHelper<eFashionStore.Model.Models.Catalogs.Category>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@section Styles{
+    <style>
+        .padding-15 {
+            padding: 15px;
+        }
 
-<h1>Index</h1>
+        .padding-left-50 {
+            padding-left: 50px;
+        }
 
+        .hidden-element {
+            opacity: 0;
+            position: relative;
+        }
+
+        .margin-bottom-10 {
+            margin-bottom: 10px
+        }
+
+        .flex-center {
+            display: flex;
+            justify-content: center
+        }
+
+        .flex-right {
+            display: flex;
+            justify-content: right
+        }
+
+        .flex-left {
+            display: flex;
+            justify-content: left
+        }
+
+        .flex-spacebetween {
+            display: flex;
+            justify-content: space-between
+        }
+    </style>
+
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Catalog</a></li>
+                    <li class="breadcrumb-item active">Categories</li>
+                </ol>
+            </div>
+            <h4 class="page-title">List Categories</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <h4 class="header-title">e-fashion-store</h4>
+            <p class="sub-header">
+            </p>
+            <div class="row flex-center">
+                <div class="col-lg-6">
+                    <div class="margin-bottom-10 flex-spacebetween">
+                        <button type="button" class="btn btn-primary createbtn" data-toggle="modal" data-target="#createModal">
+                            Create
+                        </button>
+                        <form asp-action="Index" method="get" style="min-width: 500px;">
+                            <div class="form-actions no-color flex-center">
+                                <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                                <button type="submit" style="width: 100px;"
+                                        class="btn btn-light waves-effect waves-light">
+                                    Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>  <a asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model[0].Id)</a></th>
+                                    <th>  <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model[0].Name)</a></th>
+                                    <th>
+                                        <span class="padding-15">Edit</span>
+                                        <span class="padding-15">Delete</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            <button class="btn btn-success waves-effect waves-light editbtn" data-id="@item.Id">Edit</button>
+                                            <button class="btn btn-danger waves-effect waves-light deletebtn" data-id="@item.Id">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <input id="hiddenEditId" class="hidden-element" />
+                        <input id="hiddenDeleteId" class="hidden-element" />
+                        <button id="editHiddenId" class="hidden-element" data-target="#editModal" data-toggle="modal"></button>
+                    </div>
+                    @{
+                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                    }
+                    <div class="flex-right">
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.PageIndex - 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-light waves-effect waves-light @prevDisabled">
+                            Previous
+                        </a>
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.PageIndex + 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-light waves-effect waves-light @nextDisabled">
+                            Next
+                        </a>
+                        <a class="btn btn-light waves-effect waves-light" asp-action="Index">Back to Full List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->
+<!--Start Add-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add new category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" name="name-create" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary hidden-element" id="sumitId"></button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangeCreateId">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--End Add-->
+<!-- Start Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" name="name-edit" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary hidden-element" id="sumitId"></button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangeEditId">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Edit-->
+@section Scripts{
+    <script>
+        //load original data
+        $('#dataTable').delegate('.editbtn', 'click', function () {
+            var id = parseInt($(this).data('id'))
+            $('#hiddenEditId').val($(this).data('id'))
+            $('#editHiddenId').click()
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Categories/Details',
+                contentType: 'application/json; charset=utf-8',
+                data: { "id": id },
+                success: function (data) {
+                    var object = data
+                    console.log(data)
+                    $('input[name=name-edit]').val(object.name)
+                    $('#editHiddenId').click()
+                },
+                failure: function (data) {
+                    alert("Unable to retrieve user data");
+                }
+            })
+        })
+        $('#dataTable').delegate('.deletebtn', 'click', function () {
+            var id = parseInt($(this).data('id'))
+            $('#hiddenDeleteId').val($(this).data('id'))
+            Swal.fire({
+                title: 'Do you want to delete this record?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+                denyButtonText: `Don't delete`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/Admin/Categories/Delete',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({ "id": id, "name": name }),
+                        success: function () {
+                            Swal.fire(
+                                'Successfully!',
+                                'You deleted!',
+                                'success'
+                            )
+                        },
+                        failure: function () {
+                            Swal.fire(
+                                'Fail!',
+                                'You delete fail!',
+                                'danger'
+                            )
+                        }
+                    })
+                } else if (result.isDenied) {
+                    Swal.fire('Record are not deleted', '', 'info')
+                }
+            })
+
+        })
+
+        $('#saveChangeCreateId').on('click', function () {
+            var name = $('input[name=name-create]').val()
+            console.log(name)
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Categories/Create',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ "id": 0, "name": name }),
+                success: function () {
+                    Swal.fire(
+                        'Successfully!',
+                        'You created!',
+                        'success'
+                    )
+                },
+                failure: function () {
+                    Swal.fire(
+                        'Fail!',
+                        'You create fail!',
+                        'danger'
+                    )
+                }
+            })
+        })
+
+        $('#saveChangeEditId').on('click', function () {
+            var id = parseInt($('#hiddenEditId').val())
+            var name = $('input[name=name-edit]').val()
+            console.log(name)
+            console.log(id)
+            $.ajax({
+                type: 'PUT',
+                url: '/Admin/Categories/Edit',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ "id": id, "name": name }),
+                success: function () {
+                    Swal.fire(
+                        'Successfully!',
+                        'You edited!',
+                        'success'
+                    )
+                },
+                failure: function () {
+                    Swal.fire(
+                        'Fail!',
+                        'You edit fail!',
+                        'danger'
+                    )
+                }
+            })
+        })
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+    </script>
+
+}

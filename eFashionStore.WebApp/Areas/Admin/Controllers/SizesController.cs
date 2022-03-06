@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eFahionStore.Common.RequestViewModels.Catalog;
+using eFashionStore.Service.Services.Catalogs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,79 +12,55 @@ namespace eFashionStore.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class SizesController : Controller
     {
-        // GET: SizesController
-        public ActionResult Index()
+        private ISizeService _sizeService;
+        public SizesController(ISizeService sizeService)
         {
-            return View();
+            _sizeService = sizeService;
+        }
+        // GET: SizesController
+        [HttpGet]
+        public async Task<IActionResult> Index(string searchString, int? pageNumber, string sortOrder)
+        {
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["NameSortParm"] = sortOrder == "name" ? "name_desc" : "name";
+            ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            return View(await _sizeService.GetSizesSearchSortOrderPagination(searchString, pageNumber, sortOrder));
         }
 
         // GET: SizesController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            return Ok(await _sizeService.GetSingleAsyncById(id));
         }
-
-        // GET: SizesController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: SizesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([FromBody] SizeDto sizeDto)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _sizeService.CreateNewSize(sizeDto);
+            if (result)
+                return Ok();
+            return BadRequest();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit([FromBody] SizeDto sizeDto)
+        {
+
+            var result = await _sizeService.UpdateSize(sizeDto);
+            if (result)
+                return Ok();
+            return BadRequest();
         }
 
-        // GET: SizesController/Edit/5
-        public ActionResult Edit(int id)
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] SizeDto sizeDto)
         {
-            return View();
+            var result = await _sizeService.DeleleSize(sizeDto);
+            if (result)
+                return Ok();
+            return BadRequest();
         }
 
-        // POST: SizesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SizesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: SizesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
