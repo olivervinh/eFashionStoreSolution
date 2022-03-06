@@ -10,7 +10,8 @@ namespace eFashionStore.Data.Infrastructure
     public interface IBaseRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<IEnumerable<T>> GetPaginationListAsync(int pageNumber, int pageSize);
+       IQueryable<T> GetQueryable();
+        Task<IEnumerable<T>> GetPaginationListAsync(IQueryable<T> queryableList,int pageNumber, int pageSize);
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
@@ -18,5 +19,6 @@ namespace eFashionStore.Data.Infrastructure
         Task<T> GetSingleAsyncById(int id);
         void AddRange(IEnumerable<T> entities);
         void DeleteRange(IEnumerable<T> entities);
+        IQueryable<T> GetListCondition(Expression<Func<T, bool>> predicate);
     }
 }

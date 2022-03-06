@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @await Html.PartialAsync("Partials/Head/_HeadPartial.cshtml")
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <!-- Begin page -->
@@ -19,7 +20,7 @@
                 <!-- Start Content-->
                 <div class="container-fluid">
 
-           
+
                     @RenderBody()
 
                 </div>
@@ -50,6 +51,7 @@
     <div class="rightbar-overlay"></div>
 
     @await Html.PartialAsync("Partials/Body/JavaScript/_JavaScriptPartial.cshtml")
+    @RenderSection("Scripts", required: false)
 
 </body>
 

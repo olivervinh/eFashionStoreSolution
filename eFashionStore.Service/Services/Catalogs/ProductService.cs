@@ -23,6 +23,7 @@ namespace eFashionStore.Service.Services.Catalogs
         public Task<bool> CreateVariantProductBaseProduct(ProductDto productDto);
         public Task<bool> UpdateVariantProductBaseProduct(int id,ProductDto productDto);
         public Task<bool> DeleteImageBaseProduct(int id);
+        public Task<IEnumerable<Product>> GetProductsListConditionAsync(string Search);
     }
     public class ProductService : BaseService<Product>, IProductService
     {
@@ -151,6 +152,11 @@ namespace eFashionStore.Service.Services.Catalogs
             {
                 return false;
             }
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsListConditionAsync(string Search)
+        {
+            return await _productRepository.GetListCondition(x => x.Name.Contains(Search)).ToListAsync();
         }
     }
 }

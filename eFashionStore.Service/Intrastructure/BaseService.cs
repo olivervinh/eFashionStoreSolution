@@ -73,9 +73,14 @@ namespace eFashionStore.Service.Intrastructure
             return await _repository.GetAllAsync();
         }
 
-        public Task<IEnumerable<T>> GetPaginationListAsync(int pageNumber, int pageSize)
+        public Task<IEnumerable<T>> GetPaginationListAsync(IQueryable<T> queryableList, int pageNumber, int pageSize)
+        {         
+            return _repository.GetPaginationListAsync(queryableList, pageNumber, pageSize);
+        }
+
+        public IQueryable<T> GetQueryable()
         {
-            return _repository.GetPaginationListAsync(pageNumber, pageSize);
+            return _repository.GetQueryable();
         }
 
         public async Task<T> GetSingleAsyncById(int id)

@@ -1,0 +1,47 @@
+﻿@model eFashionStore.Model.Models.Catalogs.Brand
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Catalog</a></li>
+                    <li class="breadcrumb-item active">Brands/@ViewBag.Id</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Detail Brand/@ViewBag.Id</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <h4 class="header-title">List Brands</h4>
+            <p class="sub-header">
+            </p>
+            <div class="row" style="display:flex;justify-content:center;">
+                <div class="col-lg-6">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Id)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->

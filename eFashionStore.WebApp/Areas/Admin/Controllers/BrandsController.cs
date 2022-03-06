@@ -1,4 +1,6 @@
-﻿using eFashionStore.Service.Services.Catalogs;
+﻿using eFahionStore.Common.RequestViewModels.Catalog;
+using eFashionStore.Model.Models.Catalogs;
+using eFashionStore.Service.Services.Catalogs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,78 +19,49 @@ namespace eFashionStore.WebApp.Areas.Admin.Controllers
             _brandService = brandService;
         }
         // GET: BrandsController
-        public async Task<IActionResult> Index(int? pageNumber)
-        {        
-            return View(await _brandService.GetPaginationListAsync(pageNumber??1, 5));
+        [HttpGet]
+        public async Task<IActionResult> Index(string searchString, int? pageNumber, string sortOrder)
+        {
+            ViewData["CurrentFilter"] = searchString; 
+            ViewData["NameSortParm"] = sortOrder == "name" ? "name_desc" : "name";
+            ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            return View(await _brandService.GetBrandsSearchSortOrderPagination(searchString, pageNumber, sortOrder));
         }
 
         // GET: BrandsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {          
+            return Ok(await _brandService.GetSingleAsyncById(id));
         }
-
-        // GET: BrandsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: BrandsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([FromBody]BrandDto brandDto)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _brandService.CreateNewBrand(brandDto);
+            if (result)
+                return Ok();
+            return BadRequest();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit([FromBody] BrandDto brandDto)
+        {
+            
+            var result = await _brandService.UpdateBrand(brandDto);
+            if (result)
+                return Ok();
+            return BadRequest();
         }
 
-        // GET: BrandsController/Edit/5
-        public ActionResult Edit(int id)
+       
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] BrandDto brandDto)
         {
-            return View();
+            var result = await _brandService.DeleleBrand(brandDto);
+            if (result)
+                return Ok();
+            return BadRequest();       
         }
 
-        // POST: BrandsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: BrandsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BrandsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

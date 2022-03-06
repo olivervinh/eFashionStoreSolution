@@ -22,7 +22,7 @@ namespace eFashionStore.WebAPI.Controllers.Admin.CatalogManage
         [HttpGet("GetPaginationList")]
         public async Task<IEnumerable<Brand>> GetBrandsPaginationList(int pageNumber = 2, int pageSize=3)
         {
-            return await _brandService.GetPaginationListAsync(pageNumber, pageSize);
+            return await _brandService.GetPaginationListAsync(null, pageNumber, pageSize);
         }
         [HttpPost]
         public async Task<IActionResult> CreateBrand([FromForm] BrandDto brandDto)

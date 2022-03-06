@@ -55,11 +55,26 @@ namespace eFashionStore.Data.Infrastructure
             _context.Entry(entity).State = (Microsoft.EntityFrameworkCore.EntityState)EntityState.Modified;
         }
 
-        public virtual async Task<IEnumerable<T>> GetPaginationListAsync(int pageNumber, int pageSize)
+        public virtual async Task<IEnumerable<T>> GetPaginationListAsync(IQueryable<T> queryableList, int pageNumber, int pageSize)
         {
             var list = _context.Set<T>().AsQueryable();
+            if (queryableList != null)
+            {
+                list = queryableList;
+            }
             var paginationList = PagedPaginationHelper<T>.CreateAsync(list, pageNumber, pageSize);
             return await paginationList;
+        }
+
+        public virtual IQueryable<T> GetListCondition(Expression<Func<T, bool>> predicate)
+        {
+            var predicateList = _context.Set<T>().Where(predicate).AsQueryable();
+            return predicateList;
+        }
+
+        public virtual IQueryable<T> GetQueryable()
+        {
+            return _context.Set<T>().AsQueryable();
         }
         #endregion
     }
