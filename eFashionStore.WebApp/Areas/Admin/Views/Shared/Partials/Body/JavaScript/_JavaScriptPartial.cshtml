@@ -14,3 +14,69 @@
 
 <!-- App js -->
 <script src="~/Admin/assets/js/app.min.js"></script>
+
+<script>
+    function GetAllCategory(select) {
+        $.ajax({
+            type: 'GET',
+            url: '/Admin/Categories/GetAllCategories',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {             
+                console.log(data)
+                var options=''
+                options += '<option value="Select">Select</option>';
+                var length = data.length
+                for (var i = 0; i < length; i++) {
+                    options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                }
+                $(select).append(options);
+            },
+            failure: function (data) {
+                alert("Unable to retrieve user data");
+            }
+        })
+        }
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+    }
+    function reloadPage() {
+        $('.swal2-confirm swal2-styled').on('click', function () {
+            location.reload()
+        })
+    }
+    $(document).ready(function () {
+        if (window.File && window.FileList && window.FileReader) {
+            $("#files").on("change", function (e) {
+                var files = e.target.files,
+                    filesLength = files.length;
+                for (var i = 0; i < filesLength; i++) {
+                    var f = files[i]
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function (e) {
+                        var file = e.target;
+                        $("<span class=\"pip\">" +
+                            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><span class=\"remove\">Remove image</span>" +
+                            "</span>").insertAfter("#files");
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                        });
+                    });
+                    fileReader.readAsDataURL(f);
+                }
+            });
+        } else {
+            alert("Your browser doesn't support to File API")
+        }
+    });
+</script>

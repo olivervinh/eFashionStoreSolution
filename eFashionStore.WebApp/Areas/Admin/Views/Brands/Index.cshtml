@@ -81,8 +81,8 @@ class="btn btn-light waves-effect waves-light">Search</button>
                         <table class="table" id="dataTable">
                             <thead>
                                 <tr>
-                                    <th>  <a asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model[0].Id)</a></th>
-                                    <th>  <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model[0].Name)</a></th>
+                                    <th><a asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model[0].Id)</a></th>
+                                    <th><a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model[0].Name)</a></th>
                                     <th>
                                         <span class="padding-15">Edit</span>
                                         <span class="padding-15">Delete</span>
@@ -236,6 +236,7 @@ class="btn btn-light waves-effect waves-light">Search</button>
                                 'You deleted!',
                                 'success'
                             )
+                            reloadPage()
                         },
                         failure: function () {
                             Swal.fire(
@@ -266,6 +267,7 @@ class="btn btn-light waves-effect waves-light">Search</button>
                         'You created!',
                         'success'
                     )
+                    reloadPage()
                 },
                 failure: function () {
                     Swal.fire(
@@ -293,6 +295,7 @@ class="btn btn-light waves-effect waves-light">Search</button>
                         'You edited!',
                         'success'
                     )
+                    reloadPage()
                 },
                 failure: function () {
                     Swal.fire(
@@ -303,19 +306,7 @@ class="btn btn-light waves-effect waves-light">Search</button>
                 }
             })
         })
-        function formatDate(date) {
-            var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-
-            if (month.length < 2)
-                month = '0' + month;
-            if (day.length < 2)
-                day = '0' + day;
-
-            return [year, month, day].join('-');
-        }
+       
     </script>
 
 }

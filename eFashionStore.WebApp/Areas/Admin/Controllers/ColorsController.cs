@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace eFashionStore.WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ColorController : Controller
+    public class ColorsController : Controller
     {
         private IColorService _colorService;
-        public ColorController(IColorService colorService)
+        public ColorsController(IColorService colorService)
         {
             _colorService = colorService;
         }

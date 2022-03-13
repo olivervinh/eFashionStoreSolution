@@ -36,7 +36,7 @@ namespace eFashionStore.Service.Services.Catalogs
         {
             if (!ValidateHelper.ValidateWrongStringName(colorDto.Name))
             {
-                var color = new Color(colorDto.Id, colorDto.Name,null, null,null);
+                var color = new Color(colorDto.Id, colorDto.Name,colorDto.FkCategoryId, null,null);
                 await this.Add(color);
                 return true;
             }
@@ -102,7 +102,7 @@ namespace eFashionStore.Service.Services.Catalogs
         {
             if (!ValidateHelper.ValidateWrongStringName(colorDto.Name))
             {
-                var color = new Color(colorDto.Id, colorDto.Name, null, null, null);
+                var color = new Color(colorDto.Id, colorDto.Name, colorDto.FkCategoryId, null, null);
                 await this.Update(color);
                 return true;
             }

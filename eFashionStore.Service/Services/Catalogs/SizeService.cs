@@ -36,7 +36,7 @@ namespace eFashionStore.Service.Services.Catalogs
         {
             if (!ValidateHelper.ValidateWrongStringName(sizeDto.Name))
             {
-                var size = new Size(sizeDto.Id, sizeDto.Name,null,null,null);
+                var size = new Size(sizeDto.Id, sizeDto.Name,sizeDto.FkCategoryId,null,null);
                 await this.Add(size);
                 return true;
             }
@@ -58,6 +58,7 @@ namespace eFashionStore.Service.Services.Catalogs
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex);
                     return false;
                 }
             }
@@ -102,7 +103,7 @@ namespace eFashionStore.Service.Services.Catalogs
         {
             if (!ValidateHelper.ValidateWrongStringName(sizeDto.Name))
             {
-                var size = new Size(sizeDto.Id, sizeDto.Name, null, null, null);
+                var size = new Size(sizeDto.Id, sizeDto.Name, sizeDto.FkCategoryId, null, null);
                 await this.Update(size);
                 return true;
             }

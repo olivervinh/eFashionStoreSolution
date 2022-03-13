@@ -151,7 +151,11 @@
                 <form>
                     <div class="form-group">
                         <label for="Name">Name</label>
-                        <input type="text" name="name-create" class="form-control">
+                        <input class="form-control" name="name-create">
+                    </div>
+                    <div class="form-group">
+                        <label for="Category">Category</label>
+                        <select class="form-control" name="category-create" id="category-create-id"></select>
                     </div>
                     <button type="submit" class="btn btn-primary hidden-element" id="sumitId"></button>
                 </form>
@@ -180,7 +184,11 @@
                 <form>
                     <div class="form-group">
                         <label for="Name">Name</label>
-                        <input type="text" name="name-edit" class="form-control">
+                        <select class="form-control" name="name-edit"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Category">Category</label>
+                        <select class="form-control" name="category-edit" id="category-edit-id"></select>
                     </div>
                     <button type="submit" class="btn btn-primary hidden-element" id="sumitId"></button>
                 </form>
@@ -196,6 +204,9 @@
 <!--End Edit-->
 @section Scripts{
     <script>
+        //GetAllCategories
+        GetAllCategory('#category-create-id')
+        GetAllCategory('#category-edit-id')
         //load original data
         $('#dataTable').delegate('.editbtn', 'click', function () {
             var id = parseInt($(this).data('id'))
@@ -258,18 +269,20 @@
 
         $('#saveChangeCreateId').on('click', function () {
             var name = $('input[name=name-create]').val()
+            var FkCategoryId = $('#category-create-id').val()
             console.log(name)
             $.ajax({
                 type: 'POST',
                 url: '/Admin/Colors/Create',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify({ "id": 0, "name": name }),
+                data: JSON.stringify({ "id": 0, "name": name, "fKCategoryId": FkCategoryId }),
                 success: function () {
                     Swal.fire(
                         'Successfully!',
                         'You created!',
                         'success'
                     )
+                    reloadPage()
                 },
                 failure: function () {
                     Swal.fire(
@@ -284,13 +297,14 @@
         $('#saveChangeEditId').on('click', function () {
             var id = parseInt($('#hiddenEditId').val())
             var name = $('input[name=name-edit]').val()
+            var FkCategoryId = $('#category-create-id').val()
             console.log(name)
             console.log(id)
             $.ajax({
                 type: 'PUT',
                 url: '/Admin/Colors/Edit',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify({ "id": id, "name": name }),
+                data: JSON.stringify({ "id": id, "name": name, "fKCategoryId": FkCategoryId}),
                 success: function () {
                     Swal.fire(
                         'Successfully!',
@@ -307,19 +321,6 @@
                 }
             })
         })
-        function formatDate(date) {
-            var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-
-            if (month.length < 2)
-                month = '0' + month;
-            if (day.length < 2)
-                day = '0' + day;
-
-            return [year, month, day].join('-');
-        }
     </script>
 
 }

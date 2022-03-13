@@ -27,7 +27,11 @@ namespace eFashionStore.WebApp.Areas.Admin.Controllers
             ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             return View(await _categoryService.GetCategoriesSearchSortOrderPagination(searchString, pageNumber, sortOrder));
         }
-
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            return Ok(await _categoryService.GetAllAsync());
+        }
         // GET: CategorysController/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(int id)

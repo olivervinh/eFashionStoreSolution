@@ -1,0 +1,278 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model eFahionStore.Common.Helpers.PagedPaginationHelper<eFashionStore.Model.Models.Catalogs.Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <style>
+        .padding-15 {
+            padding: 15px;
+        }
+
+        .padding-left-50 {
+            padding-left: 50px;
+        }
+
+        .hidden-element {
+            opacity: 0;
+            position: relative;
+        }
+
+        .margin-bottom-10 {
+            margin-bottom: 10px
+        }
+
+        .flex-center {
+            display: flex;
+            justify-content: center
+        }
+
+        .flex-right {
+            display: flex;
+            justify-content: right
+        }
+
+        .flex-left {
+            display: flex;
+            justify-content: left
+        }
+
+        .flex-spacebetween {
+            display: flex;
+            justify-content: space-between
+        }
+    </style>
+
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Catalog</a></li>
+                    <li class="breadcrumb-item active">Product</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Create new product</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <h5>Product : </h5>
+            <p class="sub-header">
+            </p>
+            <div class="row flex-center">
+                <div class="col md-5">
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="SellPrice">SellPrice</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="ImportPrice">ImportPrice</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="PromotionPrice">PromotionPrice</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="IsActive">IsActive</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col md-5">
+                    <div class="form-group">
+                        <label for="Brand">Brand</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Category">Category</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Supplier">Supplier</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Tag">Tag</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Gender">Gender</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row flex-center">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Description">Description</label>
+                        <textarea class="form-control" id="Description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ingredient">Ingredient</label>
+                        <textarea class="form-control" id="Ingredient" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="field" align="left">
+                            <h5>Upload your images</h5>
+                            <input type="file" id="files" name="files[]" multiple />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row flex-center">
+                <div class="col">
+                    <h5>Product Variant: </h5>
+                    <button type="button" class="btn btn-primary btn-sm createbtn" data-toggle="modal" data-target="#createModal">
+                        Create
+                    </button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    STT
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Size
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody productVariant">
+
+                           
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row flex-center">
+                <button class="btn btn-primary">Create new product</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add new product variant</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="Color">Color</label>
+                    <select class="form-control" name="color-create" id="Color"></select>
+                </div>
+                <div class="form-group">
+                    <label for="Size">Size</label>
+                    <select class="form-control" name="size-create" id="Color"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangeCreateId">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Color</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="Color">Color</label>
+                    <select class="form-control" name="color-edit" id="Color"></select>
+                </div>
+                <div class="form-group">
+                    <label for="Size">Size</label>
+                    <select class="form-control" name="size-edit" id="Color"></select>
+                </div>
+                <button type="submit" class="btn btn-primary hidden-element" id="sumitId"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangeEditId">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Edit-->
+@section Scripts{
+    <script>
+        var productVariantArray = []
+        function getProductVariantList() {
+         
+            $.each(productVariantArray, function (index, item) {
+                var html = ''
+                html += '<tr>'
+                html += '<td>' + item.id + '</td>'
+                html += '<td>' + item.f + '</td>'
+                html += '<td>' + item.id + '</td>'
+
+            })
+            /*<tr>*/
+            //    <td>
+            //    </td>
+            //    <td>
+            //    </td>
+            //    <td>
+            //    </td>
+
+            //    <td>
+            //        <button class="btn btn-success btn-sm">
+            //            Edit
+            //        </button>
+            //        <button class="btn btn-danger btn-sm">
+            //            Delete
+            //        </button>
+            //    </td>
+
+            //</tr>
+        }
+        function productVariantObject(Id, FkColorId, FkSizeId) {
+            this.id = Id
+            this.fkColorId = FkColorId
+            this.fkSizeId = FkSizeId
+        }
+        $('#saveChangeCreateId').on('click', function () {
+            var id = 0
+            var FkColorId = $('select[name=color-create]').val()
+            var FkSizeId = $('select[name=size-create]').val()
+            var object = new productVariantObject(id, FkColorId, FkSizeId)
+            productVariantArray.push(object)
+            productVariantArray = productVariantArray.map((x, i) => {
+                x.id = i + 1
+                return x
+            })
+        })
+    </script>
+}

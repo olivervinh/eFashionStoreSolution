@@ -139,7 +139,5 @@ namespace eFashionStore.Service.Services.Catalogs
                 return false;
             }
         }
-
-
     }
 }

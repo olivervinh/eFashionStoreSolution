@@ -19,11 +19,11 @@ namespace eFashionStore.Service.Services.Catalogs
 {
     public interface IProductService : IBaseService<Product>
     {
-        public Task<IEnumerable<ProductJoinImageCategoryBrand>> GetProductsPaginationListAsync(int pageNumber, int pageSize);
+        public Task<IEnumerable<Product>> GetProductsSearchSortOrderPagination(string searchString,int? pageNumber, string sortOrder);
         public Task<bool> CreateVariantProductBaseProduct(ProductDto productDto);
         public Task<bool> UpdateVariantProductBaseProduct(int id,ProductDto productDto);
         public Task<bool> DeleteImageBaseProduct(int id);
-        public Task<IEnumerable<Product>> GetProductsListConditionAsync(string Search);
+        public IQueryable<Product> GetProductsListCondition(string Search);
     }
     public class ProductService : BaseService<Product>, IProductService
     {
@@ -36,10 +36,30 @@ namespace eFashionStore.Service.Services.Catalogs
             _imageProductService = imageProductService;
             _productVariantService = productVariantService;
         }
-        public async Task<IEnumerable<ProductJoinImageCategoryBrand>> GetProductsPaginationListAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Product>> GetProductsSearchSortOrderPagination(string searchString, int? pageNumber, string sortOrder)
         {
-            return null;
+            var condition = this.GetQueryable();
+            if (searchString != null)
+                condition = this.GetProductsListCondition(searchString);
+            switch (sortOrder)
+            {
+                case "id_desc":
+                    condition = condition.OrderByDescending(s => s.Id);
+                    break;
+                case "name":
+                    condition = condition.OrderBy(s => s.Name);
+                    break;
+                case "name_desc":
+                    condition = condition.OrderByDescending(s => s.Name);
+                    break;
+                default:
+                    condition = condition.OrderBy(s => s.Id);
+                    break;
+            }
+
+            return await _productRepository.GetCustomProductsPaginationListAsync(condition, pageNumber ?? 1, 5);
         }
+
         public async Task<bool> CreateVariantProductBaseProduct(ProductDto productDto)
         {
             try
@@ -154,9 +174,11 @@ namespace eFashionStore.Service.Services.Catalogs
             }
         }
 
-        public async Task<IEnumerable<Product>> GetProductsListConditionAsync(string Search)
+        public IQueryable<Product> GetProductsListCondition(string Search)
         {
-            return await _productRepository.GetListCondition(x => x.Name.Contains(Search)).ToListAsync();
+            if (int.TryParse(Search, out int id))
+                return _productRepository.GetListCondition(x => x.Name.Contains(Search) || x.Id == id);
+            return _productRepository.GetListCondition(x => x.Name.Contains(Search));
         }
     }
 }
